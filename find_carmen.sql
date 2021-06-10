@@ -35,13 +35,13 @@ FETCH FIRST 1 ROWS ONLY;
 SELECT language
 FROM countrylanguage
 WHERE countrycode = (
-        SELECT code
-        FROM country
-        WHERE region = 'Southern Europe'
-        ORDER BY population
-        FETCH FIRST 1 ROWS ONLY
-    )
-    AND isofficial = TRUE;
+		SELECT code
+		FROM country
+		WHERE region = 'Southern Europe'
+		ORDER BY population
+		FETCH FIRST 1 ROWS ONLY
+	)
+	AND isofficial = TRUE;
 /* 
  language 
  ----------
@@ -53,18 +53,18 @@ WHERE countrycode = (
 SELECT countrycode
 FROM countrylanguage
 WHERE language = (
-        SELECT language
-        FROM countrylanguage
-        WHERE countrycode = (
-                SELECT code
-                FROM country
-                WHERE region = 'Southern Europe'
-                ORDER BY population
-                FETCH FIRST 1 ROWS ONLY
-            )
-            AND isofficial = TRUE
-    )
-    AND percentage = 100;
+		SELECT language
+		FROM countrylanguage
+		WHERE countrycode = (
+				SELECT code
+				FROM country
+				WHERE region = 'Southern Europe'
+				ORDER BY population
+				FETCH FIRST 1 ROWS ONLY
+			)
+			AND isofficial = TRUE
+	)
+	AND percentage = 100;
 /* 
  countrycode 
  -------------
@@ -76,43 +76,43 @@ WHERE language = (
 SELECT name
 FROM city
 WHERE countrycode = (
-        SELECT countrycode
-        FROM countrylanguage
-        WHERE language = (
-                SELECT language
-                FROM countrylanguage
-                WHERE countrycode = (
-                        SELECT code
-                        FROM country
-                        WHERE region = 'Southern Europe'
-                        ORDER BY population
-                        FETCH FIRST 1 ROWS ONLY
-                    )
-                    AND isofficial = TRUE
-            )
-            AND percentage = 100
-    )
-    AND name != (
-        SELECT name
-        FROM country
-        WHERE code = (
-                SELECT countrycode
-                FROM countrylanguage
-                WHERE language = (
-                        SELECT language
-                        FROM countrylanguage
-                        WHERE countrycode = (
-                                SELECT code
-                                FROM country
-                                WHERE region = 'Southern Europe'
-                                ORDER BY population
-                                FETCH FIRST 1 ROWS ONLY
-                            )
-                            AND isofficial = TRUE
-                    )
-                    AND percentage = 100
-            )
-    );
+		SELECT countrycode
+		FROM countrylanguage
+		WHERE language = (
+				SELECT language
+				FROM countrylanguage
+				WHERE countrycode = (
+						SELECT code
+						FROM country
+						WHERE region = 'Southern Europe'
+						ORDER BY population
+						FETCH FIRST 1 ROWS ONLY
+					)
+					AND isofficial = TRUE
+			)
+			AND percentage = 100
+	)
+	AND name != (
+		SELECT name
+		FROM country
+		WHERE code = (
+				SELECT countrycode
+				FROM countrylanguage
+				WHERE language = (
+						SELECT language
+						FROM countrylanguage
+						WHERE countrycode = (
+								SELECT code
+								FROM country
+								WHERE region = 'Southern Europe'
+								ORDER BY population
+								FETCH FIRST 1 ROWS ONLY
+							)
+							AND isofficial = TRUE
+					)
+					AND percentage = 100
+			)
+	);
 /* 
  name    
  ------------
@@ -124,76 +124,76 @@ WHERE countrycode = (
 SELECT countrycode
 FROM city
 WHERE name LIKE CONCAT(
-        SUBSTRING(
-            (
-                SELECT name
-                FROM city
-                WHERE countrycode = (
-                        SELECT countrycode
-                        FROM countrylanguage
-                        WHERE language = (
-                                SELECT language
-                                FROM countrylanguage
-                                WHERE countrycode = (
-                                        SELECT code
-                                        FROM country
-                                        WHERE region = 'Southern Europe'
-                                        ORDER BY population
-                                        FETCH FIRST 1 ROWS ONLY
-                                    )
-                                    AND isofficial = TRUE
-                            )
-                            AND percentage = 100
-                    )
-                    AND name != (
-                        SELECT name
-                        FROM country
-                        WHERE code = (
-                                SELECT countrycode
-                                FROM countrylanguage
-                                WHERE language = (
-                                        SELECT language
-                                        FROM countrylanguage
-                                        WHERE countrycode = (
-                                                SELECT code
-                                                FROM country
-                                                WHERE region = 'Southern Europe'
-                                                ORDER BY population
-                                                FETCH FIRST 1 ROWS ONLY
-                                            )
-                                            AND isofficial = TRUE
-                                    )
-                                    AND percentage = 100
-                            )
-                    )
-            ),
-            1,
-            3
-        ),
-        '%'
-    )
-    AND countrycode != (
-        SELECT countrycode
-        FROM countrylanguage
-        WHERE language = (
-                SELECT language
-                FROM countrylanguage
-                WHERE countrycode = (
-                        SELECT code
-                        FROM country
-                        WHERE region = 'Southern Europe'
-                        ORDER BY population
-                        FETCH FIRST 1 ROWS ONLY
-                    )
-                    AND isofficial = TRUE
-            )
-            AND percentage = 100
-    )
-    AND countrycode IN (
-        SELECT code
-        FROM country
-        WHERE region = 'South America'
-    )
+		SUBSTRING(
+			(
+				SELECT name
+				FROM city
+				WHERE countrycode = (
+						SELECT countrycode
+						FROM countrylanguage
+						WHERE language = (
+								SELECT language
+								FROM countrylanguage
+								WHERE countrycode = (
+										SELECT code
+										FROM country
+										WHERE region = 'Southern Europe'
+										ORDER BY population
+										FETCH FIRST 1 ROWS ONLY
+									)
+									AND isofficial = TRUE
+							)
+							AND percentage = 100
+					)
+					AND name != (
+						SELECT name
+						FROM country
+						WHERE code = (
+								SELECT countrycode
+								FROM countrylanguage
+								WHERE language = (
+										SELECT language
+										FROM countrylanguage
+										WHERE countrycode = (
+												SELECT code
+												FROM country
+												WHERE region = 'Southern Europe'
+												ORDER BY population
+												FETCH FIRST 1 ROWS ONLY
+											)
+											AND isofficial = TRUE
+									)
+									AND percentage = 100
+							)
+					)
+			),
+			1,
+			3
+		),
+		'%'
+	)
+	AND countrycode != (
+		SELECT countrycode
+		FROM countrylanguage
+		WHERE language = (
+				SELECT language
+				FROM countrylanguage
+				WHERE countrycode = (
+						SELECT code
+						FROM country
+						WHERE region = 'Southern Europe'
+						ORDER BY population
+						FETCH FIRST 1 ROWS ONLY
+					)
+					AND isofficial = TRUE
+			)
+			AND percentage = 100
+	)
+	AND countrycode IN (
+		SELECT code
+		FROM country
+		WHERE region = 'South America'
+	)
 FETCH FIRST 1 ROWS ONLY;
 /* 
  countrycode 
@@ -204,87 +204,87 @@ FETCH FIRST 1 ROWS ONLY;
  */
 -- Clue #6: We're close! Our South American agent says she just got a taxi at the airport, and is headed towards the capital! Look up the country's capital, and get there pronto! Send us the name of where you're headed and we'll follow right behind you!
 SELECT name
-from city
+FROM city
 WHERE id = (
-        SELECT capital
-        from country
-        WHERE code = (
-                SELECT countrycode
-                FROM city
-                WHERE name LIKE CONCAT(
-                        SUBSTRING(
-                            (
-                                SELECT name
-                                FROM city
-                                WHERE countrycode = (
-                                        SELECT countrycode
-                                        FROM countrylanguage
-                                        WHERE language = (
-                                                SELECT language
-                                                FROM countrylanguage
-                                                WHERE countrycode = (
-                                                        SELECT code
-                                                        FROM country
-                                                        WHERE region = 'Southern Europe'
-                                                        ORDER BY population
-                                                        FETCH FIRST 1 ROWS ONLY
-                                                    )
-                                                    AND isofficial = TRUE
-                                            )
-                                            AND percentage = 100
-                                    )
-                                    AND name != (
-                                        SELECT name
-                                        FROM country
-                                        WHERE code = (
-                                                SELECT countrycode
-                                                FROM countrylanguage
-                                                WHERE language = (
-                                                        SELECT language
-                                                        FROM countrylanguage
-                                                        WHERE countrycode = (
-                                                                SELECT code
-                                                                FROM country
-                                                                WHERE region = 'Southern Europe'
-                                                                ORDER BY population
-                                                                FETCH FIRST 1 ROWS ONLY
-                                                            )
-                                                            AND isofficial = TRUE
-                                                    )
-                                                    AND percentage = 100
-                                            )
-                                    )
-                            ),
-                            1,
-                            3
-                        ),
-                        '%'
-                    )
-                    AND countrycode != (
-                        SELECT countrycode
-                        FROM countrylanguage
-                        WHERE language = (
-                                SELECT language
-                                FROM countrylanguage
-                                WHERE countrycode = (
-                                        SELECT code
-                                        FROM country
-                                        WHERE region = 'Southern Europe'
-                                        ORDER BY population
-                                        FETCH FIRST 1 ROWS ONLY
-                                    )
-                                    AND isofficial = TRUE
-                            )
-                            AND percentage = 100
-                    )
-                    AND countrycode IN (
-                        SELECT code
-                        FROM country
-                        WHERE region = 'South America'
-                    )
-                FETCH FIRST 1 ROWS ONLY
-            )
-    );
+		SELECT capital
+		FROM country
+		WHERE code = (
+				SELECT countrycode
+				FROM city
+				WHERE name LIKE CONCAT(
+						SUBSTRING(
+							(
+								SELECT name
+								FROM city
+								WHERE countrycode = (
+										SELECT countrycode
+										FROM countrylanguage
+										WHERE language = (
+												SELECT language
+												FROM countrylanguage
+												WHERE countrycode = (
+														SELECT code
+														FROM country
+														WHERE region = 'Southern Europe'
+														ORDER BY population
+														FETCH FIRST 1 ROWS ONLY
+													)
+													AND isofficial = TRUE
+											)
+											AND percentage = 100
+									)
+									AND name != (
+										SELECT name
+										FROM country
+										WHERE code = (
+												SELECT countrycode
+												FROM countrylanguage
+												WHERE language = (
+														SELECT language
+														FROM countrylanguage
+														WHERE countrycode = (
+																SELECT code
+																FROM country
+																WHERE region = 'Southern Europe'
+																ORDER BY population
+																FETCH FIRST 1 ROWS ONLY
+															)
+															AND isofficial = TRUE
+													)
+													AND percentage = 100
+											)
+									)
+							),
+							1,
+							3
+						),
+						'%'
+					)
+					AND countrycode != (
+						SELECT countrycode
+						FROM countrylanguage
+						WHERE language = (
+								SELECT language
+								FROM countrylanguage
+								WHERE countrycode = (
+										SELECT code
+										FROM country
+										WHERE region = 'Southern Europe'
+										ORDER BY population
+										FETCH FIRST 1 ROWS ONLY
+									)
+									AND isofficial = TRUE
+							)
+							AND percentage = 100
+					)
+					AND countrycode IN (
+						SELECT code
+						FROM country
+						WHERE region = 'South America'
+					)
+				FETCH FIRST 1 ROWS ONLY
+			)
+	);
 /* 
  name    
  ------------
